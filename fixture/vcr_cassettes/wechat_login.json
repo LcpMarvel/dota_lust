@@ -1,0 +1,23 @@
+[
+  {
+    "request": {
+      "body": "",
+      "headers": [],
+      "method": "get",
+      "options": [],
+      "request_body": "",
+      "url": "https://api.weixin.qq.com/sns/jscode2session?appid=wxecaf6b5159ba5151&secret=8c2420d85a0228b863b53b35fa571694&js_code=081Lp9th2SP2QG046bth29Lath2Lp9tF&grant_type=authorization_code"
+    },
+    "response": {
+      "body": "{\"session_key\":\"0yxjY2BEzw9\\/paqIaBFa0Q==\",\"expires_in\":7200,\"openid\":\"oHH3q0LXCSeCCc7JhDhITMuSkauE\"}",
+      "headers": {
+        "Connection": "keep-alive",
+        "Content-Type": "text/plain",
+        "Date": "Tue, 23 May 2017 06:18:04 GMT",
+        "Content-Length": "101"
+      },
+      "status_code": 200,
+      "type": "ok"
+    }
+  }
+]
