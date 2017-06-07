@@ -1,7 +1,8 @@
 defmodule DotaLust.Wechat.UserController do
   use DotaLust.Web, :controller
 
-  alias DotaLust.Repo
+  import DotaLust.ResponseHelper
+
   alias DotaLust.User
   alias DotaLust.WechatAppletUserSession
 
@@ -9,7 +10,7 @@ defmodule DotaLust.Wechat.UserController do
 
   def update(conn, %{"encrypted_data" => encrypted_data, "iv" => iv,
     "raw_data" => raw_data, "signature" => signature}) do
-    %WechatAppletUserSession{session_key: session_key} = conn.private[:wechat_applet_resource]
+    %WechatAppletUserSession{session_key: session_key} = conn.assigns[:wechat_applet_resource]
 
     case WechatApplet.user_data_verify(raw_data, session_key, signature) do
       true ->
@@ -19,16 +20,12 @@ defmodule DotaLust.Wechat.UserController do
           true ->
             User.insert_or_update_by_wechat_open_id!(params[:wechat_open_id], params)
 
-            conn
-              |> put_resp_header("content-type", "application/json")
-              |> send_resp(204, "")
+            conn |> no_content_json
           false ->
-            conn
-              |> send_resp(401, "The appid is incorrect!")
+            conn |> send_resp(401, "The appid is incorrect!")
         end
       false ->
-        conn
-          |> send_resp(401, "The dota is incorrect!")
+        conn |> send_resp(401, "The dota is incorrect!")
     end
   end
 

@@ -2,6 +2,7 @@ defmodule DotaLust.User do
   use DotaLust.Web, :model
 
   alias DotaLust.Repo
+  alias DotaLust.WechatAppletUserSession
 
   schema "users" do
     field :nick_name, :string
@@ -12,6 +13,8 @@ defmodule DotaLust.User do
     field :country, :string
     field :province, :string
     field :city, :string
+
+    has_many :steam_accounts, DotaLust.SteamAccount
 
     timestamps()
   end
@@ -26,9 +29,14 @@ defmodule DotaLust.User do
   def insert_or_update_by_wechat_open_id!(wechat_open_id, params) do
     case Repo.get_by(__MODULE__, wechat_open_id: wechat_open_id) do
       nil ->
-        %__MODULE__{}
-          |> changeset(params)
-          |> Repo.insert!
+        user =
+          %__MODULE__{}
+            |> changeset(params)
+            |> Repo.insert!
+
+        WechatAppletUserSession.set_user_id(user)
+
+        user
       record ->
         record
           |> changeset(params)

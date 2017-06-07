@@ -3,6 +3,7 @@
 /db
 /deps
 /*.ez
+/dump.rdb
 
 # Generated on crash by the VM
 erl_crash.dump

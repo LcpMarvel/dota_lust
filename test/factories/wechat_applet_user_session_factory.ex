@@ -8,7 +8,8 @@ defmodule DotaLust.WechatAppletUserSessionFactory do
           wechat_open_id: "oHH3q0LXCSeCCc7JhDhITMuSkauE",
           session_key: "1zuOVQ5T32Ro9Ll5KkNkNg==",
           token: "FH/J6tUVp/0vPJOafI4Cpw==",
-          expired_at: Timex.shift(Timex.now, days: 1)
+          expired_at: Timex.shift(Timex.now, days: 1),
+          user: build(:user)
         }
       end
     end

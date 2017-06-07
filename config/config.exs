@@ -25,6 +25,9 @@ config :logger, :console,
 config :dota_lust, wechat_app_id: "wxecaf6b5159ba5151"
 config :dota_lust, wechat_secret: "8c2420d85a0228b863b53b35fa571694"
 
+dota2_api_keys = ["93D942144C4B978E9BE9EF157693B642", "D13FA9671981D4C4179596F041EC4DDD"]
+config :dota2_api, keys: dota2_api_keys
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"

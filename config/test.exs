@@ -16,4 +16,5 @@ config :dota_lust, DotaLust.Repo,
   password: "postgres",
   database: "dota_lust_test",
   hostname: "localhost",
-  pool: Ecto.Adapters.SQL.Sandbox
+  pool: Ecto.Adapters.SQL.Sandbox,
+  ownership_timeout: 9999999

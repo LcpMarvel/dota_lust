@@ -4,13 +4,15 @@ defmodule DotaLust.Plug.WechatAppletAuthentication do
   alias DotaLust.WechatAppletUserSession
   alias DotaLust.Repo
 
+  import DotaLust.ResponseHelper, only: [unauthorized_error: 1, unauthorized_error: 2]
+
   @spec init(any) :: any
   def init(options) do
     options
   end
 
   @spec call(Plug.Conn.t, any) :: Plug.Conn.t | no_return
-  def call(conn, _options) do
+  def call(conn, options) do
     case get_req_header(conn, "token") do
       [] ->
         unauthorized_error(conn)
@@ -20,7 +22,9 @@ defmodule DotaLust.Plug.WechatAppletAuthentication do
             unauthorized_error(conn)
 
           resource ->
-            put_private(conn, :wechat_applet_resource, resource)
+            conn
+              |> assign(:wechat_applet_resource, resource)
+              |> user_authentication(resource, options)
         end
     end
   end
@@ -32,10 +36,19 @@ defmodule DotaLust.Plug.WechatAppletAuthentication do
       |> Repo.get_by(token: token)
   end
 
-  @spec unauthorized_error(Plug.Conn.t) :: no_return
-  def unauthorized_error(conn) do
-    conn
-      |> send_resp(401, "unauthorized")
-      |> halt
+  def user_authentication(conn, resource, options) do
+    case Keyword.get(options, :user_authentication) do
+      true ->
+        %WechatAppletUserSession{user: user} = Repo.preload(resource, :user)
+
+        case user do
+          nil ->
+            unauthorized_error(conn, "user authentication failed")
+          current_user ->
+            assign(conn, :current_user, current_user)
+        end
+      _ ->
+        conn
+    end
   end
 end

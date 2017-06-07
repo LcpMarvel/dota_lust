@@ -3,12 +3,15 @@ defmodule DotaLust.WechatAppletUserSession do
   use Timex
 
   alias DotaLust.Repo
+  alias DotaLust.User
 
   schema "wechat_applet_user_sessions" do
     field :wechat_open_id, :string
     field :session_key, :string
     field :token, :string
     field :expired_at, :naive_datetime
+
+    belongs_to :user, User
 
     timestamps()
   end
@@ -49,5 +52,11 @@ defmodule DotaLust.WechatAppletUserSession do
     :md5
       |> :crypto.hash(token)
       |> Base.encode64
+  end
+
+  @spec set_user_id(Ecto.Schema.t) :: {integer, nil | [term]} | no_return
+  def set_user_id(%User{} = user) do
+    from(s in __MODULE__, where: s.wechat_open_id == ^user.wechat_open_id)
+      |> Repo.update_all(set: [user_id: user.id])
   end
 end

@@ -19,7 +19,7 @@ defmodule DotaLust.Mixfile do
   def application do
     [mod: {DotaLust, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :httpoison, :timex, :ex_machina]]
+                    :phoenix_ecto, :postgrex, :httpoison, :timex, :ex_machina, :dota2_api]]
   end
 
   # Specifies which paths to compile per environment.
@@ -40,6 +40,7 @@ defmodule DotaLust.Mixfile do
      {:httpoison, "~> 0.11.1"},
      {:exvcr, "~> 0.8", only: :test},
      {:wechat_applet, "~> 0.1.0"},
+     {:dota2_api, "~> 0.1.0", github: "LcpMarvel/dota2_api"},
      {:timex, "~> 3.0"},
      {:ex_machina, "~> 2.0"},
      {:cowboy, "~> 1.0"}]
