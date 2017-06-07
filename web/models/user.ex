@@ -1,7 +1,6 @@
 defmodule DotaLust.User do
   use DotaLust.Web, :model
 
-  alias DotaLust.Repo
   alias DotaLust.WechatAppletUserSession
 
   schema "users" do

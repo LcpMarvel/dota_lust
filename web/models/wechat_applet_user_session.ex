@@ -2,7 +2,6 @@ defmodule DotaLust.WechatAppletUserSession do
   use DotaLust.Web, :model
   use Timex
 
-  alias DotaLust.Repo
   alias DotaLust.User
 
   schema "wechat_applet_user_sessions" do

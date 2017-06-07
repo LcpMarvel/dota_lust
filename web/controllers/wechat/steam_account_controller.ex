@@ -2,6 +2,7 @@ defmodule DotaLust.Wechat.SteamAccountController do
   use DotaLust.Web, :controller
 
   alias DotaLust.SteamAccount
+  alias DotaLust.Workers.Dota2API.FetchRecentWorker
 
   import DotaLust.ResponseHelper
 
@@ -12,16 +13,17 @@ defmodule DotaLust.Wechat.SteamAccountController do
 
     current_user = conn.assigns.current_user
 
-    steam_account =
-      case Repo.get_by(SteamAccount, account_id: account_id, user_id: current_user.id) do
-        nil ->
-          %SteamAccount{}
-            |> SteamAccount.changeset(%{account_id: account_id, user_id: current_user.id})
-            |> Repo.insert!
+    case Repo.get_by(SteamAccount, account_id: account_id, user_id: current_user.id) do
+      nil ->
+        %SteamAccount{}
+          |> SteamAccount.changeset(%{account_id: account_id, user_id: current_user.id})
+          |> Repo.insert!
 
-        record ->
-          record
-      end
+      record ->
+        record
+    end
+
+    Exq.enqueue(Exq, "dota2_api", FetchRecentWorker, [account_id])
 
     conn |> no_content_json
   end

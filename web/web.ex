@@ -20,6 +20,8 @@ defmodule DotaLust.Web do
     quote do
       use Ecto.Schema
 
+      alias DotaLust.Repo
+
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
