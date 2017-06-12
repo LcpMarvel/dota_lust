@@ -1,6 +1,7 @@
 defmodule DotaLust.Workers.Dota2API.FetchRecentWorker do
   alias Dota2API.Mappers.Matches, as: Dota2MatchesAPI
 
+  alias DotaLust.Repo
   alias DotaLust.Match
   alias DotaLust.Workers.Dota2API.DetailWorker
 
@@ -10,26 +11,24 @@ defmodule DotaLust.Workers.Dota2API.FetchRecentWorker do
       account_id: account_id, matches_requested: 20
     )
 
-    match_digests
-      |> to_match_ids
-      |> uniq
+    match_ids = Enum.map(match_digests, &(&1.match_id))
+
+    match_ids
+      |> uniq(existing_match_ids(match_ids))
       |> Enum.each(&fetch_detail/1)
   end
 
-  def to_match_ids(match_digests) do
-    Enum.reduce(
-      match_digests, MapSet.new,
-      fn(match_digest, set) ->
-        MapSet.put(set, match_digest.match_id)
-      end
-    )
+  def uniq(match_ids, existing_match_ids) do
+    match_ids
+      |> MapSet.new
+      |> MapSet.difference(existing_match_ids)
   end
 
-  def uniq(%MapSet{} = match_ids) do
-    ids = MapSet.to_list(match_ids)
-
-    match_ids
-      |> MapSet.difference(Match.existing_match_ids(ids))
+  def existing_match_ids(ids) do
+    ids
+      |> Match.existing_match_ids_query
+      |> Repo.all
+      |> MapSet.new
   end
 
   def fetch_detail(match_id) do

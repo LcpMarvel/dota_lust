@@ -49,3 +49,6 @@ defenum SkillEnum, any: 0,
                    normal: 1,
                    high: 2,
                    very_high: 4
+
+defenum GameItemPlaceEnum, wearing: 0,
+                           backpack: 1

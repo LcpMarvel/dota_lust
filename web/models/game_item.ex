@@ -12,8 +12,13 @@ defmodule DotaLust.GameItem do
   end
 
   def changeset(struct, params \\ %{}) do
+    attributes = [
+      :game_item_id, :name, :cost, :secret_shop,
+      :side_shop, :localized_name, :image
+    ]
+
     struct
-    |> cast(params, [:game_item_id, :name, :cost, :secret_shop, :side_shop, :localized_name, :image])
-    |> validate_required([:game_item_id, :name, :cost, :secret_shop, :side_shop, :localized_name, :image])
+      |> cast(params, attributes)
+      |> validate_required(attributes)
   end
 end

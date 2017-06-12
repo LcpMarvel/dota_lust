@@ -7,5 +7,4 @@ defmodule Mix.Tasks.Dota2Data do
     Mix.Tasks.Dota2Data.GameItem.run(args)
     Mix.Tasks.Dota2Data.Hero.run(args)
   end
-
 end

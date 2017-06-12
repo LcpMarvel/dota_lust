@@ -28,8 +28,8 @@ defmodule DotaLust.WechatAppletUserSession do
       order_by: [desc: c.id]
   end
 
-  @spec insert_by_params(map) :: Ecto.Schema.t | no_return
-  def insert_by_params(%{"openid" => id, "session_key" => key, "expires_in" => seconds}) do
+  @spec build_params(map) :: Ecto.Schema.t
+  def build_params(%{"openid" => id, "session_key" => key, "expires_in" => seconds}) do
     params = %{
       wechat_open_id: id,
       session_key: key,
@@ -39,7 +39,6 @@ defmodule DotaLust.WechatAppletUserSession do
 
     %__MODULE__{}
       |> changeset(params)
-      |> Repo.insert!
   end
 
   @spec generate_token() :: binary
@@ -53,9 +52,8 @@ defmodule DotaLust.WechatAppletUserSession do
       |> Base.encode64
   end
 
-  @spec set_user_id(Ecto.Schema.t) :: {integer, nil | [term]} | no_return
-  def set_user_id(%User{} = user) do
+  @spec by_wechat_open_id(Ecto.Schema.t) :: Ecto.Query.t
+  def by_wechat_open_id(%User{} = user) do
     from(s in __MODULE__, where: s.wechat_open_id == ^user.wechat_open_id)
-      |> Repo.update_all(set: [user_id: user.id])
   end
 end

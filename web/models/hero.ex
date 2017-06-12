@@ -10,8 +10,10 @@ defmodule DotaLust.Hero do
   end
 
   def changeset(struct, params \\ %{}) do
+    attributes = [:hero_id, :name, :hero_name, :localized_name, :avatars]
+
     struct
-    |> cast(params, [:hero_id, :name, :hero_name, :localized_name, :avatars])
-    |> validate_required([:hero_id, :name, :hero_name, :localized_name, :avatars])
+      |> cast(params, attributes)
+      |> validate_required(attributes)
   end
 end

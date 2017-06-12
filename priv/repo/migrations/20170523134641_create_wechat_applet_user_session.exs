@@ -3,7 +3,7 @@ defmodule DotaLust.Repo.Migrations.CreateWechatAppletUserSession do
 
   def change do
     create table(:wechat_applet_user_sessions) do
-      add :wechat_open_id, :string
+      add :wechat_open_id, :string                # independent
       add :user_id, references(:users)
       add :session_key, :string
       add :token, :string
@@ -12,7 +12,7 @@ defmodule DotaLust.Repo.Migrations.CreateWechatAppletUserSession do
       timestamps()
     end
 
-    create index(:wechat_applet_user_sessions, [:wechat_open_id])
+    create index(:wechat_applet_user_sessions, :wechat_open_id)
     create index(:wechat_applet_user_sessions, [:token, :expired_at])
   end
 end

@@ -18,7 +18,7 @@ defmodule DotaLust.Wechat.UserController do
 
         case Application.fetch_env!(:dota_lust, :wechat_app_id) == appid do
           true ->
-            User.insert_or_update_by_wechat_open_id!(params[:wechat_open_id], params)
+            insert_or_update_by_wechat_open_id!(params[:wechat_open_id], params)
 
             conn |> no_content_json
           false ->
@@ -57,5 +57,26 @@ defmodule DotaLust.Wechat.UserController do
     }
 
     {:ok, params, appid}
+  end
+
+  @spec insert_or_update_by_wechat_open_id!(binary, map) :: Ecto.Schema.t | no_return
+  defp insert_or_update_by_wechat_open_id!(wechat_open_id, params) do
+    case Repo.get_by(User, wechat_open_id: wechat_open_id) do
+      nil ->
+        user =
+          %User{}
+            |> User.changeset(params)
+            |> Repo.insert!
+
+        user
+          |> WechatAppletUserSession.by_wechat_open_id
+          |> Repo.update_all(set: [user_id: user.id])
+
+        user
+      record ->
+        record
+          |> User.changeset(params)
+          |> Repo.update!
+    end
   end
 end

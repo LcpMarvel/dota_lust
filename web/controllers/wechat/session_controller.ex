@@ -18,7 +18,8 @@ defmodule DotaLust.Wechat.SessionController do
     {:ok, response} = HTTPoison.get(@wechat_jscode2session_url, [], options)
 
     user_session = Poison.decode!(response.body)
-                     |> WechatAppletUserSession.insert_by_params
+                     |> WechatAppletUserSession.build_params
+                     |> Repo.insert!
 
     render(conn, "create.json", token: user_session.token)
   end

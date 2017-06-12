@@ -26,18 +26,30 @@ defmodule DotaLust.Match do
     field :dire_score, :integer
 
     timestamps()
+
+    has_many :players, DotaLust.Player, references: :match_id, foreign_key: :match_id
+    has_many :picks_bans, DotaLust.PickBan, references: :match_id, foreign_key: :match_id
   end
 
   def changeset(struct, params \\ %{}) do
+    attributes = [
+      :match_id, :sequence_number, :season, :winner, :duration,
+      :started_at, :tower_status_of_radiant, :tower_status_of_dire,
+      :barracks_status_of_radiant, :barracks_status_of_dire, :server_cluster,
+      :first_blood_occurred_at, :lobby_type, :human_players_count, :league_id,
+      :positive_votes_count, :negative_votes_count, :game_mode, :flags, :engine,
+      :radiant_score, :dire_score
+    ]
+
     struct
-    |> cast(params, [:match_id, :sequence_number, :season, :winner, :duration, :started_at, :tower_status_of_radiant, :tower_status_of_dire, :barracks_status_of_radiant, :barracks_status_of_dire, :server_cluster, :first_blood_occurred_at, :lobby_type, :human_players_count, :league_id, :positive_votes_count, :negative_votes_count, :game_mode, :flags, :engine, :radiant_score, :dire_score])
-    |> validate_required([:match_id, :sequence_number])
+      |> cast(params, attributes)
+      |> validate_required([:match_id, :sequence_number])
+      |> cast_assoc(:players, required: true)
+      |> cast_assoc(:picks_bans, required: false)
   end
 
-  @spec existing_match_ids([String.t]) :: MapSet.t
-  def existing_match_ids(ids) do
-    from(m in __MODULE__, where: m.match_id in ^ids, select: m.match_id)
-      |> Repo.all
-      |> Enum.reduce(MapSet.new, fn(id, set) -> MapSet.put(set, id) end)
+  @spec existing_match_ids_query([String.t]) :: Ecto.Query.t
+  def existing_match_ids_query(ids) do
+    from m in __MODULE__, where: m.match_id in ^ids, select: m.match_id
   end
 end

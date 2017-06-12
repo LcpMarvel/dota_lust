@@ -15,6 +15,6 @@ defmodule DotaLust.Repo.Migrations.CreateUser do
       timestamps()
     end
 
-    create index(:users, [:wechat_open_id])
+    create index(:users, [:wechat_open_id], unique: true)
   end
 end

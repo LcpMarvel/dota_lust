@@ -29,5 +29,6 @@ defmodule DotaLust.Repo.Migrations.CreateMatch do
       timestamps()
     end
 
+    create index(:matches, :match_id, unique: true)
   end
 end

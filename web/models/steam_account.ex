@@ -11,7 +11,7 @@ defmodule DotaLust.SteamAccount do
 
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:user_id, :account_id])
-    |> validate_required([:user_id, :account_id])
+      |> cast(params, [:user_id, :account_id])
+      |> validate_required([:user_id, :account_id])
   end
 end
