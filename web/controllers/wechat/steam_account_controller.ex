@@ -2,7 +2,8 @@ defmodule DotaLust.Wechat.SteamAccountController do
   use DotaLust.Web, :controller
 
   alias DotaLust.SteamAccount
-  alias DotaLust.Workers.Dota2API.FetchRecentWorker
+  alias DotaLust.Worker.Dota2API.FetchRecentWorker
+  alias DotaLust.Worker.Dota2API.FetchAccountInfoWorker
 
   import DotaLust.ResponseHelper
 
@@ -24,6 +25,7 @@ defmodule DotaLust.Wechat.SteamAccountController do
     end
 
     Exq.enqueue(Exq, "dota2_api", FetchRecentWorker, [account_id])
+    Exq.enqueue(Exq, "dota2_api", FetchAccountInfoWorker, [account_id])
 
     conn |> no_content_json
   end

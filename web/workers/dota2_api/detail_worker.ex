@@ -1,4 +1,4 @@
-defmodule DotaLust.Workers.Dota2API.DetailWorker do
+defmodule DotaLust.Worker.Dota2API.DetailWorker do
   alias DotaLust.ETL
 
   def perform(match_id) do

@@ -1,9 +1,9 @@
-defmodule DotaLust.Workers.Dota2API.FetchRecentWorker do
+defmodule DotaLust.Worker.Dota2API.FetchRecentWorker do
   alias Dota2API.Mapper.Matches, as: Dota2MatchesAPI
 
   alias DotaLust.Repo
   alias DotaLust.Match
-  alias DotaLust.Workers.Dota2API.DetailWorker
+  alias DotaLust.Worker.Dota2API.DetailWorker
 
   # DotaLust.Workers.Dota2API.FetchRecentWorker.perform(275477134)
   def perform(account_id) do

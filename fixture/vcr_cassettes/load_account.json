@@ -1,0 +1,26 @@
+[
+  {
+    "request": {
+      "body": "",
+      "headers": [],
+      "method": "get",
+      "options": {
+        "ssl_options": "versionstlsv1.2"
+      },
+      "request_body": "",
+      "url": "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=D13FA9671981D4C4179596F041EC4DDD&steamids=76561198235742862&key="
+    },
+    "response": {
+      "body": "{\n\t\"response\": {\n\t\t\"players\": [\n\t\t\t{\n\t\t\t\t\"steamid\": \"76561198235742862\",\n\t\t\t\t\"communityvisibilitystate\": 3,\n\t\t\t\t\"profilestate\": 1,\n\t\t\t\t\"personaname\": \"419\",\n\t\t\t\t\"lastlogoff\": 1497184048,\n\t\t\t\t\"profileurl\": \"http://steamcommunity.com/id/lcp_marvel/\",\n\t\t\t\t\"avatar\": \"https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/fe/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb.jpg\",\n\t\t\t\t\"avatarmedium\": \"https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/fe/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_medium.jpg\",\n\t\t\t\t\"avatarfull\": \"https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/fe/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_full.jpg\",\n\t\t\t\t\"personastate\": 0,\n\t\t\t\t\"realname\": \"吕成鹏\",\n\t\t\t\t\"primaryclanid\": \"103582791429521408\",\n\t\t\t\t\"timecreated\": 1435137822,\n\t\t\t\t\"personastateflags\": 0,\n\t\t\t\t\"loccountrycode\": \"CN\",\n\t\t\t\t\"locstatecode\": \"02\",\n\t\t\t\t\"loccityid\": 10005\n\t\t\t}\n\t\t]\n\t\t\n\t}\n}",
+      "headers": {
+        "Content-Type": "application/json; charset=UTF-8",
+        "Expires": "Wed, 14 Jun 2017 14:21:20 GMT",
+        "Date": "Wed, 14 Jun 2017 14:21:20 GMT",
+        "Content-Length": "920",
+        "Connection": "keep-alive"
+      },
+      "status_code": 200,
+      "type": "ok"
+    }
+  }
+]
