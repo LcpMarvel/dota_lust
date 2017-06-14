@@ -1,5 +1,5 @@
 defmodule DotaLust.Workers.Dota2API.FetchRecentWorker do
-  alias Dota2API.Mappers.Matches, as: Dota2MatchesAPI
+  alias Dota2API.Mapper.Matches, as: Dota2MatchesAPI
 
   alias DotaLust.Repo
   alias DotaLust.Match

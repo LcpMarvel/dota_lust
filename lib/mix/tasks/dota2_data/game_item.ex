@@ -3,8 +3,8 @@ defmodule Mix.Tasks.Dota2Data.GameItem do
 
   alias DotaLust.Repo
   alias DotaLust.GameItem
-  alias Dota2API.Mappers.GameItems, as: GameItemAPI
-  alias Dota2API.Models.GameItem, as: GameItemModel
+  alias Dota2API.Mapper.GameItems, as: GameItemAPI
+  alias Dota2API.Model.GameItem, as: GameItemModel
 
   import Mix.Ecto
 

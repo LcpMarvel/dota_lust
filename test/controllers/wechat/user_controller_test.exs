@@ -1,7 +1,6 @@
 defmodule DotaLust.Wechat.UserControllerTest do
   use DotaLust.ConnCase
   import DotaLust.Factory
-  import Ecto.Query
 
   alias DotaLust.Repo
   alias DotaLust.User

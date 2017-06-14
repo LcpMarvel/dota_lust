@@ -7,7 +7,7 @@ defmodule DotaLust.ETL.Transform.PickBan do
     order: integer
   }
 
-  @spec execute(String.t, Dota2API.Models.PickBan.t) :: t
+  @spec execute(String.t, Dota2API.Model.PickBan.t) :: t
   def execute(match_id, pick_ban) do
     %{
       match_id: match_id,
@@ -18,7 +18,7 @@ defmodule DotaLust.ETL.Transform.PickBan do
     }
   end
 
-  @spec batch_execute(String.t, [Dota2API.Models.PickBan.t] | nil) :: [t]
+  @spec batch_execute(String.t, [Dota2API.Model.PickBan.t] | nil) :: [t]
   def batch_execute(_, nil) do
     []
   end

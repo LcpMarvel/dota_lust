@@ -1,8 +1,6 @@
 defmodule DotaLust.ETL.Transform.Match do
   alias DotaLust.ETL.Transform
 
-  import DotaLust.ETL.Helper, only: [raw_value: 1]
-
   @type t :: %{
     match_id: String.t,
     sequence_number: String.t,
@@ -30,7 +28,7 @@ defmodule DotaLust.ETL.Transform.Match do
     picks_bans: [Transform.PickBan.t]
   }
 
-  @spec execute(Dota2API.Models.Match.t) :: t
+  @spec execute(Dota2API.Model.Match.t) :: t
   def execute(match) do
     match_id = match.match_id
 
@@ -38,7 +36,7 @@ defmodule DotaLust.ETL.Transform.Match do
       match_id: match_id,
       sequence_number: match.match_sequence_number,
       season: match.season,
-      winner: match.winner |> raw_value,
+      winner: Dota2API.Enum.Faction.raw_value(match.winner),
       duration: match.duration,
       started_at: DateTime.from_unix!(match.started_at),
       tower_status_of_radiant: match.tower_status_of_radiant,
@@ -47,12 +45,12 @@ defmodule DotaLust.ETL.Transform.Match do
       barracks_status_of_dire: match.barracks_status_of_dire,
       server_cluster: match.server_cluster,
       first_blood_occurred_at: match.first_blood_occurred_at,
-      lobby_type: match.lobby_type |> raw_value,
+      lobby_type: Dota2API.Enum.LobbyType.raw_value(match.lobby_type),
       human_players_count: match.human_players_count,
       league_id: match.league_id,
       positive_votes_count: match.positive_votes_count,
       negative_votes_count: match.negative_votes_count,
-      game_mode: match.game_mode |> raw_value,
+      game_mode: Dota2API.Enum.GameMode.raw_value(match.game_mode),
       flags: match.flags,
       engine: match.engine,
       radiant_score: match.radiant_score,

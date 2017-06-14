@@ -3,8 +3,8 @@ defmodule Mix.Tasks.Dota2Data.Hero do
 
   alias DotaLust.Repo
   alias DotaLust.Hero
-  alias Dota2API.Mappers.Heroes, as: HeroAPI
-  alias Dota2API.Models.Hero, as: HeroModel
+  alias Dota2API.Mapper.Heroes, as: HeroAPI
+  alias Dota2API.Model.Hero, as: HeroModel
 
   import Mix.Ecto
 

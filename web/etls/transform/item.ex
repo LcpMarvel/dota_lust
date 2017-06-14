@@ -5,7 +5,7 @@ defmodule DotaLust.ETL.Transform.Item do
     game_item_id: integer
   }
 
-  @spec execute(Dota2API.Models.Player.t) :: [t]
+  @spec execute(Dota2API.Model.Player.t) :: [t]
   def execute(player) do
     filter_map(player.items, :wearing)
       ++ filter_map(player.backpack_items, :backpack)
