@@ -5,7 +5,9 @@ defmodule DotaLust.Repo.Migrations.CreatePlayer do
     create table(:players) do
       add :match_id, references(:matches, column: :match_id, type: :string)
       add :account_id, :string
-      add :player_slot, :string
+      add :team, :integer
+      add :position, :integer
+      add :win, :boolean, null: false, default: false
       add :hero_id, references(:heroes, column: :hero_id)
       add :kills_count, :integer
       add :deaths_count, :integer
@@ -23,5 +25,7 @@ defmodule DotaLust.Repo.Migrations.CreatePlayer do
       add :hero_healing, :integer
       add :level, :integer
     end
+
+    create index(:players, :account_id)
   end
 end

@@ -14,8 +14,10 @@ defmodule DotaLust.ETL.MatchTest do
           |> Repo.one
           |> Repo.preload(:players)
 
-      assert(match)
-      assert(Enum.count(match.players) == 10)
+      [player | _] = match.players
+
+      assert player.win
+      assert Enum.count(match.players) == 10
     end
   end
 end

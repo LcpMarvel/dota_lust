@@ -1,10 +1,13 @@
 defmodule DotaLust.ETL.Transform.Player do
   alias DotaLust.ETL.Transform
+  alias Dota2API.Enum.Faction
 
   @type t :: %{
     match_id: String.t,
     account_id: String.t,
-    player_slot: String.t,
+    team: integer,
+    position: integer,
+    win: boolean,
     hero_id: integer,
     kills_count: integer,
     deaths_count: integer,
@@ -25,12 +28,14 @@ defmodule DotaLust.ETL.Transform.Player do
     ability_upgrades: [Transform.AbilityUpgrade.t]
   }
 
-  @spec execute(String.t, Dota2API.Model.Player.t) :: t
-  def execute(match_id, player) do
+  @spec execute(Dota2API.Model.Match.t, Dota2API.Model.Player.t) :: t
+  def execute(match, player) do
     %{
-      match_id: match_id,
+      match_id: match.match_id,
       account_id: player.account_id,
-      player_slot: player.player_slot,
+      team: player.team |> Faction.raw_value,
+      position: player.position,
+      win: match.winner === player.team,
       hero_id: player.hero_id,
       kills_count: player.kills_count,
       deaths_count: player.deaths_count,
@@ -52,10 +57,10 @@ defmodule DotaLust.ETL.Transform.Player do
     }
   end
 
-  @spec batch_execute(String.t, [Dota2API.Model.Player.t]) :: [map]
-  def batch_execute(match_id, players) do
+  @spec batch_execute(Dota2API.Model.Match.t, [Dota2API.Model.Player.t]) :: [map]
+  def batch_execute(match, players) do
     players
-      |> Enum.map(fn(player) -> execute(match_id, player) end)
+      |> Enum.map(fn(player) -> execute(match, player) end)
   end
 
   @spec kda_of_player(Dota2API.Model.Player.t) :: float

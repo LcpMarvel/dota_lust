@@ -61,22 +61,22 @@ defmodule DotaLust.Wechat.UserController do
 
   @spec insert_or_update_by_wechat_open_id!(binary, map) :: Ecto.Schema.t | no_return
   defp insert_or_update_by_wechat_open_id!(wechat_open_id, params) do
-    case Repo.get_by(User, wechat_open_id: wechat_open_id) do
-      nil ->
-        user =
+    user =
+      case Repo.get_by(User, wechat_open_id: wechat_open_id) do
+        nil ->
           %User{}
             |> User.changeset(params)
             |> Repo.insert!
+        record ->
+          record
+            |> User.changeset(params)
+            |> Repo.update!
+      end
 
-        user
-          |> WechatAppletUserSession.by_wechat_open_id
-          |> Repo.update_all(set: [user_id: user.id])
+    user
+      |> WechatAppletUserSession.by_wechat_open_id
+      |> Repo.update_all(set: [user_id: user.id])
 
-        user
-      record ->
-        record
-          |> User.changeset(params)
-          |> Repo.update!
-    end
+    user
   end
 end

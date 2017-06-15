@@ -16,10 +16,15 @@ defmodule DotaLust.Wechat.SteamAccountController do
 
     case Repo.get_by(SteamAccount, account_id: account_id, user_id: current_user.id) do
       nil ->
-        %SteamAccount{}
-          |> SteamAccount.changeset(%{account_id: account_id, user_id: current_user.id})
-          |> Repo.insert!
+        params = %{
+          account_id: account_id,
+          user_id: current_user.id,
+          default: default_account(current_user.id)
+        }
 
+        %SteamAccount{}
+          |> SteamAccount.changeset(params)
+          |> Repo.insert!
       record ->
         record
     end
@@ -28,5 +33,18 @@ defmodule DotaLust.Wechat.SteamAccountController do
     Exq.enqueue(Exq, "dota2_api", FetchAccountInfoWorker, [account_id])
 
     conn |> no_content_json
+  end
+
+  @spec default_account(integer) :: boolean
+  def default_account(user_id) do
+    steam_accounts_count =
+      user_id
+        |> SteamAccount.by_user_id
+        |> Repo.aggregate(:count, :id)
+
+    case steam_accounts_count do
+      0 -> true
+      _ -> false
+    end
   end
 end

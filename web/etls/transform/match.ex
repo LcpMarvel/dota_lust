@@ -55,7 +55,7 @@ defmodule DotaLust.ETL.Transform.Match do
       engine: match.engine,
       radiant_score: match.radiant_score,
       dire_score: match.dire_score,
-      players: Transform.Player.batch_execute(match_id, match.players),
+      players: Transform.Player.batch_execute(match, match.players),
       picks_bans: Transform.PickBan.batch_execute(match_id, match.picks_bans)
     }
   end

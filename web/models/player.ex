@@ -3,7 +3,9 @@ defmodule DotaLust.Player do
 
   schema "players" do
     field :account_id, :string
-    field :player_slot, :string
+    field :team, FactionEnum
+    field :position, :integer
+    field :win, :boolean
     field :kills_count, :integer
     field :deaths_count, :integer
     field :assists_count, :integer
@@ -29,7 +31,7 @@ defmodule DotaLust.Player do
 
   def changeset(struct, params \\ %{}) do
     attributes = [
-      :match_id, :account_id, :player_slot, :hero_id, :kills_count, :deaths_count,
+      :match_id, :account_id, :hero_id, :team, :position, :win, :kills_count, :deaths_count,
       :assists_count, :kda, :leaver_status, :last_hits_count, :denies_count, :gold,
       :gold_per_minute, :experience_per_minute, :gold_spent, :hero_damage, :tower_damage,
       :hero_healing, :level
@@ -40,5 +42,15 @@ defmodule DotaLust.Player do
       |> validate_required([:match_id, :account_id, :hero_id])
       |> cast_assoc(:ability_upgrades)
       |> cast_assoc(:items)
+  end
+
+  @spec by_account_id(String.t, Ecto.queryable) :: Ecto.Query.t
+  def by_account_id(account_id, queryable \\ __MODULE__) do
+    from p in queryable, where: p.account_id == ^account_id
+  end
+
+  @spec win_scope(Ecto.queryable) :: Ecto.Query.t
+  def win_scope(queryable \\ __MODULE__) do
+    from p in queryable, where: p.win == true
   end
 end
