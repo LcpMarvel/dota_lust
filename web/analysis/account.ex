@@ -7,7 +7,7 @@ defmodule DotaLust.Analysis.Account do
   def winning_percentage(account_id) do
     case matches_count(account_id) do
       0 ->
-        0
+        0.0
       matches_count ->
         win_count = matches_win_count(account_id)
 

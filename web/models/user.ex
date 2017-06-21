@@ -12,13 +12,14 @@ defmodule DotaLust.User do
     field :city, :string
 
     has_many :steam_accounts, DotaLust.SteamAccount
+    # has_one :steam_account, from(a in DotaLust.SteamAccount, where: a.default == true)
 
     timestamps()
   end
 
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:nick_name, :wechat_open_id, :gender, :language, :avatar_url, :country, :province, :city])
-    |> validate_required([:nick_name])
+      |> cast(params, [:nick_name, :wechat_open_id, :gender, :language, :avatar_url, :country, :province, :city])
+      |> validate_required([:nick_name])
   end
 end

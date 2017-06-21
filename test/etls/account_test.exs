@@ -11,13 +11,13 @@ defmodule DotaLust.ETL.AccountTest do
     insert(:steam_account)
 
     use_cassette "load_account" do
-      account_id = "275477134"
+      account_id = "105248644"
 
       DotaLust.ETL.Account.execute(account_id)
 
       account =
-        account_id
-          |> SteamAccount.by_account_id
+        SteamAccount
+          |> SteamAccount.account_id_scope(account_id)
           |> Repo.one
 
       assert(account.steam64_id)

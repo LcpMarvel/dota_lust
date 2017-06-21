@@ -3,7 +3,7 @@ defmodule DotaLust.PickBan do
 
   schema "picks_bans" do
     field :is_pick, :boolean, default: false
-    field :team, :integer
+    field :team, FactionEnum
     field :order, :integer
 
     belongs_to :match, DotaLust.Match, primary_key: :match_id, type: :string

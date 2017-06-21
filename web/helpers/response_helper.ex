@@ -12,4 +12,11 @@ defmodule DotaLust.ResponseHelper do
       |> Plug.Conn.send_resp(401, message)
       |> Plug.Conn.halt
   end
+
+  @spec unprocessable_entity_error(Plug.Conn.t, String.t) :: no_return
+  def unprocessable_entity_error(conn, message \\ "Unprocessable Entity") do
+    conn
+      |> Plug.Conn.send_resp(422, message)
+      |> Plug.Conn.halt
+  end
 end

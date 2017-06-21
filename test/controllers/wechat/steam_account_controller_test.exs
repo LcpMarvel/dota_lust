@@ -6,7 +6,7 @@ defmodule DotaLust.Wechat.SteamAccountControllerTest do
   alias DotaLust.SteamAccount
 
   test "#create", %{conn: conn} do
-    account_id = "275477134"
+    account_id = "105248644"
 
     resource = insert(:wechat_applet_user_session)
 
@@ -20,4 +20,6 @@ defmodule DotaLust.Wechat.SteamAccountControllerTest do
 
     assert steam_account
   end
+
+  # "105248644" Liquid.Miracle
 end

@@ -10,8 +10,6 @@ defmodule DotaLust.Wechat.SteamAccountController do
   plug DotaLust.Plug.WechatAppletAuthentication, user_authentication: true
 
   def create(conn, %{"account_id" => account_id}) do
-    account_id = account_id || 275477134
-
     current_user = conn.assigns.current_user
 
     case Repo.get_by(SteamAccount, account_id: account_id, user_id: current_user.id) do
@@ -38,8 +36,8 @@ defmodule DotaLust.Wechat.SteamAccountController do
   @spec default_account(integer) :: boolean
   def default_account(user_id) do
     steam_accounts_count =
-      user_id
-        |> SteamAccount.by_user_id
+      SteamAccount
+        |> SteamAccount.user_id_scope(user_id)
         |> Repo.aggregate(:count, :id)
 
     case steam_accounts_count do

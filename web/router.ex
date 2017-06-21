@@ -26,5 +26,6 @@ defmodule DotaLust.Router do
 
     resources "/user", UserController, singleton: true, only: [:update]
     resources "/steam_accounts", SteamAccountController, only: [:create]
+    resources "/matches", MatchController, only: [:index]
   end
 end

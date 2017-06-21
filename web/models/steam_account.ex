@@ -15,7 +15,7 @@ defmodule DotaLust.SteamAccount do
     field :realname, :string
     field :created_at, :naive_datetime
     field :default, :boolean, default: false
-    field :winning_percentage, :float, default: 0
+    field :winning_percentage, :float, default: 0.0
     field :matches_count, :integer, default: 0
     field :matches_win_count, :integer, default: 0
 
@@ -35,11 +35,25 @@ defmodule DotaLust.SteamAccount do
       |> validate_required([:user_id, :account_id])
   end
 
-  def by_account_id(account_id) do
-    from a in __MODULE__, where: a.account_id == ^account_id
+  @spec default_record(Ecto.Query.t, String.t) :: Ecto.Query.t
+  def default_record(scope, user_id) do
+    scope
+      |> user_id_scope(user_id)
+      |> default_scope
   end
 
-  def by_user_id(user_id) do
-    from a in __MODULE__, where: a.user_id == ^user_id
+  @spec default_scope(Ecto.Query.t) :: Ecto.Query.t
+  def default_scope(scope) do
+    from a in scope, where: a.default == true
+  end
+
+  @spec account_id_scope(Ecto.Query.t, String.t) :: Ecto.Query.t
+  def account_id_scope(scope, account_id) do
+    from a in scope, where: a.account_id == ^account_id
+  end
+
+  @spec user_id_scope(Ecto.Query.t, String.t) :: Ecto.Query.t
+  def user_id_scope(scope, user_id) do
+    from a in scope, where: a.user_id == ^user_id
   end
 end

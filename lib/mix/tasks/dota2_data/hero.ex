@@ -8,7 +8,7 @@ defmodule Mix.Tasks.Dota2Data.Hero do
 
   import Mix.Ecto
 
-  @shortdoc "Prepare game item for Dota2"
+  @shortdoc "Prepare hero for Dota2"
 
   def run(args) do
     Application.ensure_all_started(:dota2_api)

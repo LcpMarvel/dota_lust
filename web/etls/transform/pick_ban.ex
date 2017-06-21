@@ -7,13 +7,15 @@ defmodule DotaLust.ETL.Transform.PickBan do
     order: integer
   }
 
+  alias Dota2API.Enum.Faction
+
   @spec execute(String.t, Dota2API.Model.PickBan.t) :: t
   def execute(match_id, pick_ban) do
     %{
       match_id: match_id,
       hero_id: pick_ban.hero_id,
       is_pick: pick_ban.is_pick,
-      team: pick_ban.team,
+      team: Faction.raw_value(pick_ban.team),
       order: pick_ban.order
     }
   end

@@ -1,6 +1,8 @@
 defmodule DotaLust.Match do
   use DotaLust.Web, :model
 
+  alias DotaLust.Player
+
   schema "matches" do
     field :match_id, :string
     field :sequence_number, :string
@@ -27,7 +29,7 @@ defmodule DotaLust.Match do
 
     timestamps()
 
-    has_many :players, DotaLust.Player, references: :match_id, foreign_key: :match_id
+    has_many :players, Player, references: :match_id, foreign_key: :match_id
     has_many :picks_bans, DotaLust.PickBan, references: :match_id, foreign_key: :match_id
   end
 
@@ -51,5 +53,18 @@ defmodule DotaLust.Match do
   @spec existing_match_ids_query([String.t]) :: Ecto.Query.t
   def existing_match_ids_query(ids) do
     from m in __MODULE__, where: m.match_id in ^ids, select: m.match_id
+  end
+
+  @spec account_id_scope(Ecto.Query.t, [String.t]) :: Ecto.Query.t
+  def account_id_scope(scope, account_id) do
+    from m in scope,
+      join: p in Player, on: p.match_id == m.match_id,
+      where: p.account_id == ^account_id,
+      select: m
+  end
+
+  @spec recent(Ecto.Query.t) :: Ecto.Query.t
+  def recent(scope, count \\ 20) do
+    from m in scope, limit: ^count, order_by: [desc: m.match_id]
   end
 end

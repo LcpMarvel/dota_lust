@@ -50,5 +50,19 @@ defenum SkillEnum, any: 0,
                    high: 2,
                    very_high: 4
 
+defenum CommunityVisibilityStateEnum, private: 1,
+                                      friends_only: 2,
+                                      friends_of_friends: 3,
+                                      users_only: 4,
+                                      public: 5
+
+defenum PersonaStateEnum, offline: 0,
+                          online: 1,
+                          busy: 2,
+                          away: 3,
+                          snooze: 4,
+                          looking_to_trade: 5,
+                          looking_to_play: 6
+
 defenum GameItemPlaceEnum, wearing: 0,
                            backpack: 1

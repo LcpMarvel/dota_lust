@@ -3,7 +3,7 @@ defmodule DotaLust.PickBanTest do
 
   alias DotaLust.PickBan
 
-  @valid_attrs %{hero_id: 42, is_pick: true, match_id: "some content", order: 42, team: 42}
+  @valid_attrs %{hero_id: 42, is_pick: true, match_id: "some content", order: 42, team: :dire}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do
