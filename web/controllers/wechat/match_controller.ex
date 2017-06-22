@@ -2,8 +2,8 @@ defmodule DotaLust.Wechat.MatchController do
   use DotaLust.Web, :controller
 
   import DotaLust.ResponseHelper
+  import DotaLust.SteamAccountHelper
 
-  alias DotaLust.SteamAccount
   alias DotaLust.Match
 
   plug DotaLust.Plug.WechatAppletAuthentication, user_authentication: true
@@ -15,17 +15,18 @@ defmodule DotaLust.Wechat.MatchController do
   def index(conn, _params) do
     current_user = conn.assigns.current_user
 
-    steam_account =
-      SteamAccount
-        |> SteamAccount.default_record(current_user.id)
-        |> Repo.one
-
-    case steam_account do
+    case default_steam_account(current_user) do
       nil ->
         unprocessable_entity_error(conn)
       account ->
         find_and_render_matches(conn, account.account_id)
     end
+  end
+
+  def show(conn, %{"id" => match_id}) do
+    match = Repo.get_by!(Match, match_id: match_id)
+
+    render(conn, "show.json", match: match)
   end
 
   defp find_and_render_matches(conn, nil) do
