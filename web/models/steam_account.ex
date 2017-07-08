@@ -1,8 +1,10 @@
 defmodule DotaLust.SteamAccount do
   use DotaLust.Web, :model
 
+  alias DotaLust.User
+
   schema "steam_accounts" do
-    belongs_to :user, DotaLust.User
+    belongs_to :user, User
 
     field :account_id, :string
     field :steam64_id, :string
@@ -56,5 +58,12 @@ defmodule DotaLust.SteamAccount do
   @spec user_id_scope(Ecto.Query.t, String.t) :: Ecto.Query.t
   def user_id_scope(scope, user_id) do
     from a in scope, where: a.user_id == ^user_id
+  end
+
+  def wechat_open_id_scope(scope, wechat_open_id) do
+    from a in scope,
+      join: u in User, on: u.id == a.user_id,
+      select: a,
+      where: u.wechat_open_id == ^wechat_open_id
   end
 end

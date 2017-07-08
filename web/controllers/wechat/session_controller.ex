@@ -21,6 +21,6 @@ defmodule DotaLust.Wechat.SessionController do
                      |> WechatAppletUserSession.build_params
                      |> Repo.insert!
 
-    render(conn, "create.json", token: user_session.token)
+    render(conn, "create.json", user_session: user_session)
   end
 end
