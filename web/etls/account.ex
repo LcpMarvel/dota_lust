@@ -3,9 +3,13 @@ defmodule DotaLust.ETL.Account do
 
   @spec execute(String.t) :: Ecto.Schema.t
   def execute(account_id) do
-    account_id
-      |> ETL.Extract.Account.execute
-      |> ETL.Transform.PlayerSummary.execute
-      |> ETL.Load.Account.execute
+    case ETL.Extract.Account.execute(account_id) do
+      nil ->
+        nil
+      player_summary ->
+        player_summary
+          |> ETL.Transform.PlayerSummary.execute
+          |> ETL.Load.Account.execute
+    end
   end
 end

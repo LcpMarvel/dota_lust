@@ -3,19 +3,23 @@ defmodule DotaLust.Worker.Dota2API.FetchRecentWorker do
 
   alias DotaLust.Repo
   alias DotaLust.Match
+  alias DotaLust.SteamAccount
   alias DotaLust.Worker.Dota2API.DetailWorker
 
   # DotaLust.Workers.Dota2API.FetchRecentWorker.perform(275477134)
   def perform(account_id) do
-    {:ok, _, _, _, match_digests} = Dota2MatchesAPI.load(
-      account_id: account_id, matches_requested: 20
-    )
+    case Dota2MatchesAPI.load(account_id: account_id, matches_requested: 20) do
+      {:ok, _, _, _, match_digests} ->
+        match_ids = Enum.map(match_digests, &(&1.match_id))
 
-    match_ids = Enum.map(match_digests, &(&1.match_id))
-
-    match_ids
-      |> uniq(existing_match_ids(match_ids))
-      |> Enum.each(&fetch_detail/1)
+        match_ids
+          |> uniq(existing_match_ids(match_ids))
+          |> Enum.each(&fetch_detail/1)
+      {:error, _} ->
+        SteamAccount
+          |> SteamAccount.account_id_scope(account_id)
+          |> Repo.update_all(set: [valid: false])
+    end
   end
 
   def uniq(match_ids, existing_match_ids) do

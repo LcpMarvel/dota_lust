@@ -18,6 +18,7 @@ defmodule DotaLust.SteamAccount do
     field :winning_percentage, :float, default: 0.0
     field :matches_count, :integer, default: 0
     field :matches_win_count, :integer, default: 0
+    field :valid, :boolean, default: true
 
     timestamps()
   end
@@ -44,7 +45,7 @@ defmodule DotaLust.SteamAccount do
 
   @spec default_scope(Ecto.Query.t) :: Ecto.Query.t
   def default_scope(scope) do
-    from a in scope, where: a.default == true
+    from a in scope, where: a.default == true and a.valid == true
   end
 
   @spec account_id_scope(Ecto.Query.t, String.t) :: Ecto.Query.t
