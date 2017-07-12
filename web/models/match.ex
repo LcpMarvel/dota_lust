@@ -67,4 +67,12 @@ defmodule DotaLust.Match do
   def recent(scope, count \\ 20) do
     from m in scope, limit: ^count, order_by: [desc: m.match_id]
   end
+
+  def ranked(scope) do
+    game_modes =
+      Dota2API.Enum.GameMode.ranked_modes
+        |> Dota2API.Enum.GameMode.raw_values
+
+    from m in scope, where: m.game_mode in ^game_modes
+  end
 end

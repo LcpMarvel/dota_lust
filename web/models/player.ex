@@ -1,6 +1,8 @@
 defmodule DotaLust.Player do
   use DotaLust.Web, :model
 
+  alias DotaLust.Match
+
   schema "players" do
     field :account_id, :string
     field :team, FactionEnum
@@ -22,7 +24,7 @@ defmodule DotaLust.Player do
     field :hero_healing, :integer
     field :level, :integer
 
-    belongs_to :match, DotaLust.Match, primary_key: :match_id, type: :string
+    belongs_to :match, Match, primary_key: :match_id, type: :string
     belongs_to :hero, DotaLust.Hero, primary_key: :hero_id
 
     has_many :ability_upgrades, DotaLust.AbilityUpgrade
@@ -44,13 +46,13 @@ defmodule DotaLust.Player do
       |> cast_assoc(:items)
   end
 
-  @spec by_account_id(String.t, Ecto.queryable) :: Ecto.Query.t
-  def by_account_id(account_id, queryable \\ __MODULE__) do
+  @spec account_id_scope(Ecto.queryable, String.t) :: Ecto.Query.t
+  def account_id_scope(queryable, account_id) do
     from p in queryable, where: p.account_id == ^account_id
   end
 
   @spec win_scope(Ecto.queryable) :: Ecto.Query.t
-  def win_scope(queryable \\ __MODULE__) do
+  def win_scope(queryable) do
     from p in queryable, where: p.win == true
   end
 end

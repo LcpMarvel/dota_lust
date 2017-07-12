@@ -6,9 +6,9 @@ defmodule DotaLust.Worker.Dota2API.FetchRecentWorker do
   alias DotaLust.SteamAccount
   alias DotaLust.Worker.Dota2API.DetailWorker
 
-  # DotaLust.Workers.Dota2API.FetchRecentWorker.perform(275477134)
+  # DotaLust.Worker.Dota2API.FetchRecentWorker.perform(275477134)
   def perform(account_id) do
-    case Dota2MatchesAPI.load(account_id: account_id, matches_requested: 20) do
+    case Dota2MatchesAPI.load(account_id: account_id, matches_requested: 100) do
       {:ok, _, _, _, match_digests} ->
         match_ids = Enum.map(match_digests, &(&1.match_id))
 
