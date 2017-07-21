@@ -14,6 +14,7 @@ defmodule DotaLust do
       supervisor(DotaLust.Endpoint, []),
       # Start your own worker by calling: DotaLust.Worker.start_link(arg1, arg2, arg3)
       # worker(DotaLust.Worker, [arg1, arg2, arg3]),
+      worker(Redix, redix_args())
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
@@ -27,5 +28,17 @@ defmodule DotaLust do
   def config_change(changed, _new, removed) do
     DotaLust.Endpoint.config_change(changed, removed)
     :ok
+  end
+
+  def redix_args do
+    [
+      [
+        host: Application.fetch_env!(:dota_lust, :redix_host),
+        port: Application.fetch_env!(:dota_lust, :redix_port)
+      ],
+      [
+        name: :redix
+      ]
+    ]
   end
 end

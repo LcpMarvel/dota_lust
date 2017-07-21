@@ -2,10 +2,11 @@ defmodule DotaLust.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "room:*", DotaLust.RoomChannel
+  channel "account_sync:*", DotaLust.AccountSyncChannel
 
   ## Transports
-  transport :websocket, Phoenix.Transports.WebSocket
+  transport :websocket, Phoenix.Transports.WebSocket,
+            transport_log: :debug
   # transport :longpoll, Phoenix.Transports.LongPoll
 
   # Socket params are passed from the client and can

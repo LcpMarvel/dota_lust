@@ -11,6 +11,7 @@ defmodule DotaLust.Wechat.SessionView do
 
     %{
       token: user_session.token,
+      expired_at: Timex.to_unix(user_session.expired_at),
       steam_id_bound: steam_accounts_count > 0
     }
   end

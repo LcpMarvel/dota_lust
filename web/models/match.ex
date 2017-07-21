@@ -46,6 +46,7 @@ defmodule DotaLust.Match do
     struct
       |> cast(params, attributes)
       |> validate_required([:match_id, :sequence_number])
+      |> unique_constraint(:match_id)
       |> cast_assoc(:players, required: true)
       |> cast_assoc(:picks_bans, required: false)
   end

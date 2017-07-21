@@ -41,6 +41,9 @@ config :exq,
   max_retries: 2,
   shutdown_timeout: 5000
 
+config :dota_lust, redix_host: "127.0.0.1"
+config :dota_lust, redix_port: 6379
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"

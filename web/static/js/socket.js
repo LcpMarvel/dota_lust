@@ -5,7 +5,30 @@
 // and connect at the socket path in "lib/my_app/endpoint.ex":
 import {Socket} from "phoenix"
 
-let socket = new Socket("/socket", {params: {token: window.userToken}})
+let socket = new Socket("/socket", {
+  // logger: ((kind, msg, data) => { console.log(`${kind}: ${msg}`, data) })
+})
+
+socket.connect()
+
+// socket.onOpen( ev => console.log("OPEN", ev) )
+// socket.onError( ev => console.log("ERROR", ev) )
+// socket.onClose( e => console.log("CLOSE", e))
+
+var chan = socket.channel("account_sync:3", {})
+chan.join().receive("ignore", () => console.log("auth error"))
+           .receive("ok", () => console.log("join ok"))
+           // .after(10000, () => console.log("Connection interruption"))
+// chan.onError(e => console.log("something went wrong", e))
+// chan.onClose(e => console.log("channel closed", e))
+
+chan.on("new_progress", msg => {
+  console.log(msg)
+})
+
+chan.push("new_progress", {})
+    .receive("ok", (data) => console.log(data))
+// let socket = new Socket("/socket", {params: {token: window.userToken}})
 
 // When you connect, you'll often need to authenticate the client.
 // For example, imagine you have an authentication plug, `MyAuth`,
@@ -51,12 +74,12 @@ let socket = new Socket("/socket", {params: {token: window.userToken}})
 // Finally, pass the token on connect as below. Or remove it
 // from connect if you don't care about authentication.
 
-socket.connect()
+// socket.connect()
 
-// Now that you are connected, you can join channels with a topic:
-let channel = socket.channel("topic:subtopic", {})
-channel.join()
-  .receive("ok", resp => { console.log("Joined successfully", resp) })
-  .receive("error", resp => { console.log("Unable to join", resp) })
+// // Now that you are connected, you can join channels with a topic:
+// let channel = socket.channel("topic:subtopic", {})
+// channel.join()
+//   .receive("ok", resp => { console.log("Joined successfully", resp) })
+//   .receive("error", resp => { console.log("Unable to join", resp) })
 
 export default socket

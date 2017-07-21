@@ -25,8 +25,10 @@ defmodule DotaLust.Router do
     post "/login", SessionController, :create
 
     resources "/user", UserController, singleton: true, only: [:update]
-    resources "/steam_accounts", SteamAccountController, only: [:create] do
+    resources "/steam_accounts", SteamAccountController, only: [:index, :create, :delete] do
       get "/summary", SteamAccountController, :summary
+      patch "/default", SteamAccountController, :default
+      post "/refresh", SteamAccountController, :refresh
     end
     resources "/steam_account", SteamAccountController, only: [], singleton: true do
       get "/summary", SteamAccountController, :summary

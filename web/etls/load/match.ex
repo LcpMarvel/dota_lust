@@ -7,6 +7,6 @@ defmodule DotaLust.ETL.Load.Match do
     %Match{}
       |> Repo.preload(:picks_bans, players: [:ability_upgrades, :items])
       |> Match.changeset(map)
-      |> Repo.insert!
+      |> Repo.insert
   end
 end

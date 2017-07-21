@@ -34,7 +34,7 @@ defmodule DotaLust.WechatAppletUserSession do
       wechat_open_id: id,
       session_key: key,
       token: generate_token(),
-      expired_at: Timex.shift(Timex.now, seconds: seconds)
+      expired_at: Timex.shift(Timex.now, seconds: seconds - 10)
     }
 
     %__MODULE__{}

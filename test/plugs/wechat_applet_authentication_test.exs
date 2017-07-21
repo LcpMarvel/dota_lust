@@ -3,7 +3,6 @@ defmodule DotaLust.WechatAppletAuthenticationTest do
 
   import DotaLust.Factory
   alias DotaLust.Plug.WechatAppletAuthentication
-  alias DotaLust.Repo
 
   test "returns 401 if token invalid" do
     conn = build_conn(:get, "/hello")
@@ -15,9 +14,7 @@ defmodule DotaLust.WechatAppletAuthenticationTest do
 
   test "returns 401 if user is empty and has user_authentication option" do
     resource =
-      insert(:wechat_applet_user_session)
-        |> Ecto.Changeset.change(user_id: nil)
-        |> Repo.update!
+      insert(:wechat_applet_user_session, user: nil)
 
     conn = call_plug(resource.token)
 

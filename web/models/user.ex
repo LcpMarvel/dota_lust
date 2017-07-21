@@ -20,6 +20,7 @@ defmodule DotaLust.User do
   def changeset(struct, params \\ %{}) do
     struct
       |> cast(params, [:nick_name, :wechat_open_id, :gender, :language, :avatar_url, :country, :province, :city])
-      |> validate_required([:nick_name])
+      |> validate_required([:nick_name, :wechat_open_id])
+      |> unique_constraint(:wechat_open_id)
   end
 end

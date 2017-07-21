@@ -60,6 +60,11 @@ defmodule DotaLust.SteamAccount do
     from a in scope, where: a.user_id == ^user_id
   end
 
+  @spec user_id_scope(Ecto.Query.t, String.t, integer) :: Ecto.Query.t
+  def user_id_scope(scope, user_id, limit) do
+    from a in scope, where: a.user_id == ^user_id, limit: ^limit
+  end
+
   def wechat_open_id_scope(scope, wechat_open_id) do
     from a in scope,
       join: u in User, on: u.id == a.user_id,
