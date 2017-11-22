@@ -1,4 +1,4 @@
-# DotaLust
+# DotaLust (hmm.. gave up)
 
 To start your Phoenix app:
 
