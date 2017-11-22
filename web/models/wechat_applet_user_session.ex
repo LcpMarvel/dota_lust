@@ -52,8 +52,8 @@ defmodule DotaLust.WechatAppletUserSession do
       |> Base.encode64
   end
 
-  @spec by_wechat_open_id(Ecto.Schema.t) :: Ecto.Query.t
-  def by_wechat_open_id(%User{} = user) do
-    from(s in __MODULE__, where: s.wechat_open_id == ^user.wechat_open_id)
+  @spec by_wechat_open_id(Ecto.Schema.t, String.t) :: Ecto.Query.t
+  def by_wechat_open_id(queryable, wechat_open_id) do
+    from(s in __MODULE__, where: s.wechat_open_id == ^wechat_open_id)
   end
 end

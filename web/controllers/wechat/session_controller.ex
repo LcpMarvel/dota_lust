@@ -2,6 +2,7 @@ defmodule DotaLust.Wechat.SessionController do
   use DotaLust.Web, :controller
 
   alias DotaLust.WechatAppletUserSession
+  alias DotaLust.UserSteamAccount
 
   @wechat_jscode2session_url "https://api.weixin.qq.com/sns/jscode2session"
 
@@ -21,6 +22,12 @@ defmodule DotaLust.Wechat.SessionController do
                      |> WechatAppletUserSession.build_params
                      |> Repo.insert!
 
-    render(conn, "create.json", user_session: user_session)
+    steam_accounts_count =
+      UserSteamAccount
+        |> UserSteamAccount.wechat_open_id_scope(user_session.wechat_open_id)
+        |> Repo.aggregate(:count, :id)
+
+    render(conn, "create.json", user_session: user_session,
+                                steam_accounts_count: steam_accounts_count)
   end
 end

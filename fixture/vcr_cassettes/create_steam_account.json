@@ -1,0 +1,29 @@
+[
+  {
+    "request": {
+      "body": "",
+      "headers": [],
+      "method": "get",
+      "options": {
+        "ssl_options": "versionstlsv1.2"
+      },
+      "request_body": "",
+      "url": "http://api.steampowered.com/IDOTA2Match_570/GetMatchHistory/v1?key=93D942144C4B978E9BE9EF157693B642&account_id=275477134&matches_requested=1"
+    },
+    "response": {
+      "body": "{\n\"result\":{\n\"status\":1,\n\"num_results\":1,\n\"total_results\":500,\n\"results_remaining\":499,\n\"matches\":[\n{\n\"match_id\":3331491193,\n\"match_seq_num\":2906984143,\n\"start_time\":1500813004,\n\"lobby_type\":7,\n\"radiant_team_id\":0,\n\"dire_team_id\":0,\n\"players\":[\n{\n\"account_id\":154710156,\n\"player_slot\":0,\n\"hero_id\":14\n},\n{\n\"account_id\":4294967295,\n\"player_slot\":1,\n\"hero_id\":104\n},\n{\n\"account_id\":305737580,\n\"player_slot\":2,\n\"hero_id\":108\n},\n{\n\"account_id\":172119008,\n\"player_slot\":3,\n\"hero_id\":48\n},\n{\n\"account_id\":151299362,\n\"player_slot\":4,\n\"hero_id\":46\n},\n{\n\"account_id\":4294967295,\n\"player_slot\":128,\n\"hero_id\":18\n},\n{\n\"account_id\":4294967295,\n\"player_slot\":129,\n\"hero_id\":30\n},\n{\n\"account_id\":4294967295,\n\"player_slot\":130,\n\"hero_id\":38\n},\n{\n\"account_id\":275477134,\n\"player_slot\":131,\n\"hero_id\":93\n},\n{\n\"account_id\":4294967295,\n\"player_slot\":132,\n\"hero_id\":39\n}\n]\n\n}\n]\n\n}\n}",
+      "headers": {
+        "Content-Type": "application/json; charset=UTF-8",
+        "Last-Modified": "Mon, 24 Jul 2017 10:34:20 GMT",
+        "Content-Length": "862",
+        "Expires": "Mon, 24 Jul 2017 10:34:20 GMT",
+        "Cache-Control": "max-age=0, no-cache, no-store",
+        "Pragma": "no-cache",
+        "Date": "Mon, 24 Jul 2017 10:34:20 GMT",
+        "Connection": "keep-alive"
+      },
+      "status_code": 200,
+      "type": "ok"
+    }
+  }
+]

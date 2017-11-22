@@ -13,7 +13,8 @@ defmodule DotaLust.Worker.Dota2API.DetailWorker do
     [_, array] = Redix.pipeline!(:redix, commands)
     key_value_array = Enum.chunk(array, 2)
 
-    broadcast!(redis_key, calculate_progress(key_value_array, total))
+    progress = calculate_progress(key_value_array, total)
+    broadcast!(redis_key, progress)
   end
 
   def current_progress(redis_key) do

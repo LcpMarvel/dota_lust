@@ -4,4 +4,5 @@ defmodule DotaLust.Factory do
   use DotaLust.WechatAppletUserSessionFactory
   use DotaLust.UserFactory
   use DotaLust.SteamAccountFactory
+  use DotaLust.UserSteamAccountFactory
 end

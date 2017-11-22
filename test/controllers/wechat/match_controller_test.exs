@@ -8,7 +8,8 @@ defmodule DotaLust.Wechat.MatchControllerTest do
 
   setup do
     resource = insert(:wechat_applet_user_session) |> Repo.preload(:user)
-    insert(:steam_account, user: resource.user)
+    steam_account = insert(:steam_account)
+    insert(:user_steam_account, user: resource.user, steam_account: steam_account)
 
     EssentialData.load_matches
 

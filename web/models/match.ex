@@ -76,4 +76,19 @@ defmodule DotaLust.Match do
 
     from m in scope, where: m.game_mode in ^game_modes
   end
+
+  def expected_ranked_modes do
+    [
+      :all_pick,
+      :captain_mode,
+      :random_draft,
+      :single_draft,
+      :all_random,
+      :reverse_captain_mode,
+      :captain_draft,
+      :balanced_draft,
+      :all_random_death_match,
+      :ranked_all_pick
+    ]
+  end
 end

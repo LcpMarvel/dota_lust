@@ -20,4 +20,10 @@ defmodule DotaLust.AccountSyncChannel do
   def channel(steam_account_id) do
     "account_sync:#{steam_account_id}"
   end
+
+  def steam_account_id_from_channel_name(name) do
+    "account_sync:" <> steam_account_id = name
+
+    steam_account_id
+  end
 end

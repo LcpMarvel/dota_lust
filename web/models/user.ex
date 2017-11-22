@@ -11,8 +11,8 @@ defmodule DotaLust.User do
     field :province, :string
     field :city, :string
 
-    has_many :steam_accounts, DotaLust.SteamAccount
-    # has_one :steam_account, from(a in DotaLust.SteamAccount, where: a.default == true)
+    has_many :users_steam_accounts, DotaLust.UserSteamAccount
+    # has_many :steam_accounts, through: [:users_steam_accounts, :steam_account]
 
     timestamps()
   end

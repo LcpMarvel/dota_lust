@@ -2,7 +2,7 @@ defmodule DotaLust.Wechat.MatchController do
   use DotaLust.Web, :controller
 
   import DotaLust.ResponseHelper
-  import DotaLust.SteamAccountHelper
+  import DotaLust.UserSteamAccountHelper
 
   alias DotaLust.Match
 
@@ -15,10 +15,10 @@ defmodule DotaLust.Wechat.MatchController do
   def index(conn, _params) do
     current_user = conn.assigns.current_user
 
-    case default_steam_account(current_user) do
+    case default_user_steam_account(current_user) |> Repo.preload(:steam_account) do
       nil ->
         unprocessable_entity_error(conn)
-      account ->
+      %DotaLust.UserSteamAccount{steam_account: account} ->
         find_and_render_matches(conn, account.account_id)
     end
   end

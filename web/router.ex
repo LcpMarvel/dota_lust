@@ -34,5 +34,6 @@ defmodule DotaLust.Router do
       get "/summary", SteamAccountController, :summary
     end
     resources "/matches", MatchController, only: [:index, :show]
+    resources "/users_groups", UserGroupController, only: [:create]
   end
 end

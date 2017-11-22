@@ -25,7 +25,7 @@ defmodule DotaLust.Wechat.UserController do
             conn |> send_resp(401, "The appid is incorrect!")
         end
       false ->
-        conn |> send_resp(401, "The dota is incorrect!")
+        conn |> send_resp(401, "The data is incorrect!")
     end
   end
 
@@ -73,8 +73,8 @@ defmodule DotaLust.Wechat.UserController do
             |> Repo.update!
       end
 
-    user
-      |> WechatAppletUserSession.by_wechat_open_id
+    WechatAppletUserSession
+      |> WechatAppletUserSession.by_wechat_open_id(user.wechat_open_id)
       |> Repo.update_all(set: [user_id: user.id])
 
     user
